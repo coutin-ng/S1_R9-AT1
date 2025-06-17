@@ -8,9 +8,10 @@ let valorKm = [];
 let tipoEntregas = [];
 let continuar = 1;
 let custoEntregas = [];
-let i;
+let soma = 0;
 
-for (let i = 0; continuar == 1; i++) {
+
+for (i = 0; continuar == 1; i++) {
 
     do {
 
@@ -28,13 +29,13 @@ for (let i = 0; continuar == 1; i++) {
 
         distancias[i] = prompSync(`Insira a distância da entrega (em quilômetros): `);
 
-    } while (isNaN(distancias[i]) || distancias == 0);
+    } while (isNaN(distancias[i]) || distancias[i] == 0);
 
     do {
 
         valorKm[i] = prompSync(`Insira o valor cobrado por quilômetro: `);
 
-    } while (isNaN(valorKm[i]) || valorKm == 0);
+    } while (isNaN(valorKm[i]) || valorKm[i] == 0);
 
     do {
 
@@ -44,24 +45,33 @@ for (let i = 0; continuar == 1; i++) {
 
     if (tipoEntregas[i] == 1) {
 
-        custoEntregas[i] = (`Valor da entrega: R$${((distancias[i] * valorKm[i]) * 1.2 .toFixed(2))}`);
+        custoEntregas[i] = parseFloat(`${((distancias[i] * valorKm[i]) * 1.2).toFixed(2)}`);
         tipoEntregas[i] = "Urgente";
+        soma += custoEntregas[i];
 
     } else {
 
-        custoEntregas[i] = (`Valor da entrega: R$${(distancias[i] * valorKm[i]) .toFixed(2)}`);
+        custoEntregas[i] = parseFloat(`${(distancias[i] * valorKm[i]).toFixed(2)}`);
         tipoEntregas[i] = "Normal";
+        soma += custoEntregas[i];
 
     }
-    console.log(`\n ${nomes}\n ${enderecos} \n ${tipoEntregas} \n ${custoEntregas}`);
-
+    
     do {
 
         continuar = prompSync(`Você deseja continuar? Digite 1 para continuar: `);
 
     } while (isNaN(continuar));
-   
-    console.log(`\n Total de entregas: ${i+1}`);
+
 }
 
+console.log(`\n ${nomes}\n ${enderecos} \n ${tipoEntregas} \n Valor das entregas: R$${custoEntregas}`);
+    
+let media = (soma / i)
+
+console.log(`\n Total de entregas: ${i} \n A média do valor da entregas é : R$ ${media}`);
+
+let conteudo = `\nNomes: ${nomes} \nEndereços: ${enderecos} \nDistâncias em km: ${distancias} \nValores por km: ${valorKm} \nTipos de Entregas: ${tipoEntregas} \nCusto das Entregas: ${custoEntregas}`
+let historico = "historico.txt"
+fs.writeFileSync(historico, conteudo, "utf8");
 
