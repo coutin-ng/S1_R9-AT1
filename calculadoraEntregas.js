@@ -9,6 +9,7 @@ let tipoEntregas = [];
 let continuar = 1;
 let custoEntregas = [];
 let soma = 0;
+let conteudo = "";
 
 
 for (i = 0; continuar == 1; i++) {
@@ -56,22 +57,22 @@ for (i = 0; continuar == 1; i++) {
         soma += custoEntregas[i];
 
     }
-    
+
     do {
 
         continuar = prompSync(`Você deseja continuar? Digite 1 para continuar: `);
 
     } while (isNaN(continuar));
 
+    conteudo += `\n Pedido do(a): ${nomes[i]}\n Endereço: ${enderecos[i]}\n Distância: ${distancias[i]}Km \n Valor por km: R$${valorKm[i]}\n Tipo da entrega: ${tipoEntregas[i]}\n Valor da entrega: R$${custoEntregas[i]}\n`
 }
 
-console.log(`\n ${nomes}\n ${enderecos} \n ${tipoEntregas} \n Valor das entregas: R$${custoEntregas}`);
-    
+console.log(conteudo)
+
 let media = (soma / i)
 
 console.log(`\n Total de entregas: ${i} \n A média do valor da entregas é : R$ ${media}`);
 
-let conteudo = `\nNomes: ${nomes} \nEndereços: ${enderecos} \nDistâncias em km: ${distancias} \nValores por km: ${valorKm} \nTipos de Entregas: ${tipoEntregas} \nCusto das Entregas: ${custoEntregas}`
-let historico = "historico.txt"
-fs.writeFileSync(historico, conteudo, "utf8");
+let historico = "historico.txt";
+fs.appendFileSync(historico, conteudo, "utf8");
 
